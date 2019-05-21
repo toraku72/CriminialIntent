@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +19,7 @@ public class CrimePagerActivity extends AppCompatActivity {
     private static final String EXTRA_CRIME_ID = "com.bignerdranch.android.criminialintent.crime_id";
 
     private ViewPager mViewPager;
+    private Button mFirstButton, mLastButton;
     private List<Crime> mCrimes;
 
     public static Intent newIntent(Context packageContext, UUID crimeId) {
@@ -55,5 +58,48 @@ public class CrimePagerActivity extends AppCompatActivity {
                 break;
             }
         }
+        
+        mFirstButton = findViewById(R.id.first_button);
+        mFirstButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager.setCurrentItem(0);
+            }
+        });
+
+
+        mLastButton = findViewById(R.id.last_button);
+        mLastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //noinspection ConstantConditions
+                mViewPager.setCurrentItem(mViewPager.getAdapter().getCount() - 1);
+            }
+        });
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                updateButtons(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
+        updateButtons(mViewPager.getCurrentItem());
+    }
+
+    private void updateButtons(int position) {
+        mFirstButton.setEnabled(position != 0);
+        //noinspection ConstantConditions
+        mLastButton.setEnabled(position != mViewPager.getAdapter().getCount() - 1);
     }
 }

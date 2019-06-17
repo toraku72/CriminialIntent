@@ -164,9 +164,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        if (mCrime.getSuspect() !=  null) {
-            updateSuspect();
-        } else {
+        if (mCrime.getSuspect() ==  null) {
             mCallButton.setEnabled(false);
         }
 
@@ -264,6 +262,8 @@ public class CrimeFragment extends Fragment {
 
 
     private void updateSuspect() {
+        if (mCrime.getSuspect() == null)
+            return;
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             Cursor c = getActivity().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,

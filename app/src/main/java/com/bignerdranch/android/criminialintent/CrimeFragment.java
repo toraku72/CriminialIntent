@@ -200,10 +200,11 @@ public class CrimeFragment extends Fragment {
         String dateString = DateFormat.format(dateFormat, mCrime.getDate()).toString();
 
         String suspect = mCrime.getSuspect();
-        if (suspect == null) {
+        if (suspect == null || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             suspect = getString(R.string.crime_report_no_suspect);
         } else {
-            suspect = getString(R.string.crime_report_suspect, suspect);
+            suspect = getString(R.string.crime_report_suspect, mSuspectButton.getText());
         }
 
         String report = getString(R.string.crime_report, mCrime.getTitle(), dateString, solvedString, suspect);

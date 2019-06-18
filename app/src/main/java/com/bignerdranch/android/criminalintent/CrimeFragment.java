@@ -38,6 +38,7 @@ import static android.widget.CompoundButton.*;
 public class CrimeFragment extends Fragment {
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_PHOTO = "DialogPhoto";
 
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_CONTACT = 1;
@@ -185,6 +186,16 @@ public class CrimeFragment extends Fragment {
             }
         });
         mPhotoView = v.findViewById(R.id.crime_photo);
+        mPhotoView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPhotoFile != null && mPhotoFile.exists()) {
+                    FragmentManager manager = getFragmentManager();
+                    PhotoViewFragment dialog = PhotoViewFragment.newInstance(mPhotoFile.getPath());
+                    dialog.show(manager, DIALOG_PHOTO);
+                }
+            }
+        });
         updatePhotoView();
 
         return v;

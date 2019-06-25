@@ -1,4 +1,4 @@
-package com.bignerdranch.android.criminialintent;
+package com.bignerdranch.android.criminalintent;
 
 import android.app.Activity;
 import android.content.DialogInterface;

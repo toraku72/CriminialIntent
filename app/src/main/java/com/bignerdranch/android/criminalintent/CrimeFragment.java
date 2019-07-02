@@ -49,7 +49,6 @@ public class CrimeFragment extends Fragment {
     private static final int REQUEST_CONTACT = 1;
     private static final int REQUEST_PHOTO = 2;
 
-
     private Crime mCrime;
     private File mPhotoFile;
     private EditText mTitleField;
@@ -66,6 +65,7 @@ public class CrimeFragment extends Fragment {
      */
     public interface Callbacks {
         void onCrimeUpdated(Crime crime);
+        void onCrimeDeleted(Crime crime);
     }
 
     public static CrimeFragment newInstance(UUID crimeId) {
@@ -237,7 +237,7 @@ public class CrimeFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 CrimeLab.get(getActivity()).deleteCrime(mCrime.getId());
-                                getActivity().finish();
+                                mCallBacks.onCrimeDeleted(mCrime);
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, null)
